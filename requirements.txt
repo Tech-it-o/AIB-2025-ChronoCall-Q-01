@@ -1,5 +1,5 @@
 streamlit
 transformers
-torch==2.7.0
+torch # <--- ถอดเวอร์ชันเฉพาะออก ให้ pip หาเวอร์ชันล่าสุดที่เข้ากันได้
 accelerate
-bitsandbytes
+bitsandbytes # <--- ให้ pip หาเวอร์ชันล่าสุดที่เข้ากันได้
