@@ -39,7 +39,7 @@ if prompt:
     # --- 5. การเรียกใช้ Gemini API ---
     try:
         # สร้างโมเดล Gemini. 'gemini-pro' เหมาะสำหรับการสนทนาข้อความ
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('Gemini 1.5 Pro')
 
         # เตรียมประวัติการสนทนาสำหรับ Gemini API
         # Gemini API คาดหวัง role เป็น "user" หรือ "model"
