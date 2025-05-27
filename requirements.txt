@@ -1,5 +1,2 @@
 streamlit
-transformers
-torch # <--- ถอดเวอร์ชันเฉพาะออก ให้ pip หาเวอร์ชันล่าสุดที่เข้ากันได้
-accelerate
-bitsandbytes # <--- ให้ pip หาเวอร์ชันล่าสุดที่เข้ากันได้
+google-generativeai
