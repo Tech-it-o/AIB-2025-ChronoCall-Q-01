@@ -1,5 +1,5 @@
 streamlit
 transformers
-torch==2.1.0 # สามารถลอง 2.2.0 หรือ 2.3.0 ได้ แต่ต้องมั่นใจว่า bitsandbytes รองรับ
+torch==2.7.0
 accelerate
-bitsandbytes==0.41.0 # สำคัญมาก ควรระบุเวอร์ชันที่แน่นอนที่รองรับ CPU (บางเวอร์ชันเก่ารองรับแค่ GPU)
+bitsandbytes
