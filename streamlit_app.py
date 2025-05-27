@@ -7,7 +7,7 @@ import gc
 # **เปลี่ยนชื่อโมเดลตรงนี้สำหรับ Qwen3-4B**
 # ตรวจสอบชื่อที่ถูกต้องบน Hugging Face Hub: https://huggingface.co/Qwen
 # หากมีเวอร์ชัน -Chat จะเหมาะกับการทำ Chatbot มากกว่า
-MODEL_NAME = "Qwen/Qwen3-4B-Chat" # <--- เปลี่ยนเป็นชื่อโมเดล Qwen3-4B-Chat ที่คุณต้องการใช้ (หรือ Qwen/Qwen3-4B ถ้าเป็น Base)
+MODEL_NAME = "Qwen/Qwen3-4B" # <--- เปลี่ยนเป็นชื่อโมเดล Qwen3-4B-Chat ที่คุณต้องการใช้ (หรือ Qwen/Qwen3-4B ถ้าเป็น Base)
 
 # ตั้งค่า precision และ device
 # บน Streamlit Cloud จะเป็น CPU และเราจะพึ่งพา load_in_4bit
