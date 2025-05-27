@@ -6,7 +6,7 @@ import google.generativeai as genai
 # st.secrets จะดึงค่าจากไฟล์ .streamlit/secrets.toml
 # หรือจาก Streamlit Cloud Dashboard (แนะนำให้ตั้งค่าใน Dashboard เมื่อ deploy)
 try:
-    api_key = st.secrets["gemini_api_key"]
+    api_key = "AIzaSyBV__STA0thnAS6-RVol-VJDIZ-yhdqM2M"
     genai.configure(api_key=api_key)
 except KeyError:
     st.error("Gemini API Key ไม่ถูกตั้งค่า! โปรดเพิ่ม 'gemini_api_key' ใน Streamlit Secrets หรือไฟล์ .streamlit/secrets.toml")
