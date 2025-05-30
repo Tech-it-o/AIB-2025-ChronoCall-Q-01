@@ -2,3 +2,6 @@ streamlit
 google-generativeai
 transformers
 accelerate
+torch
+safetensors
+huggingface_hub
