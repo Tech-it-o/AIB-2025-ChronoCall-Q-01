@@ -32,8 +32,8 @@ def model_answer(messages):
 if __name__ == "__main__":
     print("Testing the model...")
     messages = [
-        {"role": "system", "content": "คุณเป็นผู้ช่วยที่ตอบคำถามเกี่ยวกับข้อมูลที่ฉันให้ชื่อว่า อัลฟ่า"},
-        {"role": "user", "content": "คุณชื่ออะไร"},
+        {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: 2025-02-01.\n\nCurrent Day: Saturday."},
+        {"role": "user", "content": "เอานัดทำการบ้านกับเพื่อนพฤหัสที่จะถึงนี้ออก"},
     ]
     
     response = model_answer(messages)
