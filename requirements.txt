@@ -5,3 +5,4 @@ accelerate
 torch
 safetensors
 huggingface_hub
+bitsandbytes
