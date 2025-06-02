@@ -15,6 +15,7 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 
 def model_answer(messages):
+    print("Model is running...")
     text = tokenizer.apply_chat_template(
         messages,
         tokenize=False,
@@ -29,6 +30,7 @@ def model_answer(messages):
     return(output_text)
 
 if __name__ == "__main__":
+    pruint("Testing the model...")
     messages = [
         {"role": "system", "content": "คุณเป็นผู้ช่วยที่ตอบคำถามเกี่ยวกับข้อมูลที่ฉันให้ชื่อว่า อัลฟ่า"},
         {"role": "user", "content": "คุณชื่ออะไร"},
