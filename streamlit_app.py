@@ -5,7 +5,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import json
 
 # --- Load Model ---
-model_name_or_path = "hf-internal-testing/tiny-random-Qwen2ForCausalLM"
+model_name_or_path = "Qwen/Qwen3-0.6B"
 
 with open('tools.json', 'r', encoding='utf-8') as f:
     TOOLS = json.load(f)
