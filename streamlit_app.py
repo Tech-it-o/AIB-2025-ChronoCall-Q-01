@@ -1,7 +1,7 @@
 import streamlit as st
 # import google.generativeai as genai # ไม่จำเป็นถ้าใช้ Qwen อย่างเดียว
 
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer
 import json
 import torch
 
@@ -11,17 +11,11 @@ model_name_or_path = "Qwen/Qwen3-0.6B"
 with open('tools.json', 'r', encoding='utf-8') as f:
     TOOLS = json.load(f)
 
-quantization_config = BitsAndBytesConfig(
-    load_in_8bit=True,
-    # bnb_4bit_quant_type="nf4", # ถ้าต้องการลอง 4-bit (ประหยัดกว่าแต่ช้ากว่า)
-    # bnb_4bit_compute_dtype=torch.bfloat16, # มักใช้กับ 4-bit
-)
-
 tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
 model = AutoModelForCausalLM.from_pretrained(
-    model_name_or_path, # "Qwen/Qwen-0.6B"
-    quantization_config=quantization_config, # ใช้ quantization config
-    device_map="auto", # ให้ Accelerate จัดการ
+    model_name_or_path,
+    torch_dtype=torch.bfloat16,
+    device_map="auto",
     trust_remote_code=True,
 )
 
