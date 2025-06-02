@@ -1,7 +1,7 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import json
 
-model_name_or_path = "TechitoTamani/Qwen3-0.6B_FinetuneWithMyData-2"
+model_name_or_path = "TechitoTamani/Qwen3-0.6B_FinetuneWithMyData"
 
 with open('tools.json', 'r', encoding='utf-8') as f:
     TOOLS = json.load(f)
