@@ -7,7 +7,7 @@ st.set_page_config(page_title="Test-ChronoCall-Q Output-1", page_icon="🤖")
 st.title("ChronoCall-Q Output")
 st.caption("พิมพ์ข้อความของคุณด้านล่างแล้วกด Enter หรือปุ่ม 'ส่ง'")
 
-model_name_or_path = "Qwen/Qwen3-0.6B"
+model_name_or_path = "TechitoTamani/Qwen3-0.6B_FinetuneWithMyData"
 
 # โหลด TOOLS จาก tools.json (ควรมีไฟล์นี้อยู่ในไดเรกทอรีเดียวกัน)
 with open('tools.json', 'r', encoding='utf-8') as f:
