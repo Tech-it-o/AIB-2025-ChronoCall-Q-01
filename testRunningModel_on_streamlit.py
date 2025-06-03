@@ -2,23 +2,38 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import streamlit as st
 import json
+from peft import PeftModel, PeftConfig
 
 st.set_page_config(page_title="Test-ChronoCall-Q Output", page_icon="🤖")
 st.title("Output ChronoCall-Q")
 st.caption("พิมพ์ตรงนี้ ")
 
-model_name_or_path = "TechitoTamani/Qwen3-0.6B_FinetuneWithMyData"
-
 with open('tools.json', 'r', encoding='utf-8') as f:
     TOOLS = json.load(f)
 
-tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
+# 1. กำหนดชื่อ Base Model และ LoRA ของคุณ
+base_model_id = "Qwen/Qwen3-0.6B" # หรือ "Qwen/Qwen3-0.6B-Chat"
+lora_model_id = "TechitoTamani/Qwen3-0.6B_FinetuneWithMyData"
+
+# 2. โหลด Tokenizer ของ Base Model
+tokenizer = AutoTokenizer.from_pretrained(base_model_id)
+
+# 3. โหลด Base Model
+# กำหนด device ที่จะใช้ (cuda สำหรับ GPU, cpu สำหรับ CPU)
+device = "cpu"
+print(f"Using device: {device}")
+
+# สำหรับ Qwen3 อาจจะต้องใช้ trust_remote_code=True
 model = AutoModelForCausalLM.from_pretrained(
-    model_name_or_path,
-    torch_dtype=torch.bfloat16,
-    device_map="auto",
-    trust_remote_code=True,
+    base_model_id,
+    torch_dtype= torch.float32,
+    device_map="auto", # ให้ PEFT จัดการการกระจายโมเดล
+    trust_remote_code=True # Qwen บางเวอร์ชันต้องการตัวนี้
 )
+
+# 4. โหลด LoRA และผนวกเข้ากับ Base Model
+# เนื่องจากคุณ push เฉพาะ LoRA ขึ้นไป LoRA ของคุณจึงทำงานเป็น PEFT adapter
+model = PeftModel.from_pretrained(model, lora_model_id)
 
 def model_answer(messages):
     print("Model is running...") # This will still print to the console where Streamlit is run
