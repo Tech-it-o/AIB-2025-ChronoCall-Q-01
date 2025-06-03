@@ -15,7 +15,7 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 
 def model_answer(messages):
-    print("Model is running...")
+    print("Model is runniหหหหng...")
     text = tokenizer.apply_chat_template(
         messages,
         tokenize=False,
