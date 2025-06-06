@@ -87,6 +87,9 @@ def main():
             
 
     # ถ้า login แล้ว
+    code = params.get("code", [None])[0]
+    st.write("📦 ได้รับ code จาก Google:", code)
+    
     creds = Credentials(**st.session_state["credentials"])
     service = create_service(creds)
 
