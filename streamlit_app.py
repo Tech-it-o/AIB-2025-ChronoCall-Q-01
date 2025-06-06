@@ -1,5 +1,5 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch # ต้อง import torch ด้วย
+import torch
 import streamlit as st
 import json
 
@@ -17,7 +17,7 @@ def load_model_and_tokenizer():
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
     model = AutoModelForCausalLM.from_pretrained(
         model_name_or_path,
-        torch_dtype=torch.bfloat16, # ระบุ dtype ที่ชัดเจน
+        torch_dtype=torch.bfloat16,
         device_map="auto",
         trust_remote_code=True,
     )
@@ -41,7 +41,6 @@ def get_model_answer(messages):
 
 # --- Streamlit ---
 
-# ✅ Inject CSS to force all input borders to purple
 st.markdown("""
     <style>
     /* เปลี่ยนกรอบหลักให้เป็นสีม่วง */
