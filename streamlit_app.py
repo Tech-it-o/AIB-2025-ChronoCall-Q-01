@@ -3,18 +3,16 @@ import torch # ต้อง import torch ด้วย
 import streamlit as st
 import json
 
-st.set_page_config(page_title="Test-ChronoCall-Q Output", page_icon="🤖")
-st.title("ChronoCall-Q Output")
-st.caption("พิมพ์ข้อความของคุณด้านล่างแล้วกด Enter หรือปุ่ม 'ส่ง'")
+st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🤖")
+st.title("ChronoCall-Q")
+st.caption("พิมพ์คำสั่งของคุณด้านล่างแล้วกด Enter หรือปุ่ม 'ยืนยัน'")
 
 model_name_or_path = "TechitoTamani/Qwen3-0.6B_FinetuneWithMyData-Merged"
 
-# โหลด TOOLS จาก tools.json (ควรมีไฟล์นี้อยู่ในไดเรกทอรีเดียวกัน)
 with open('tools.json', 'r', encoding='utf-8') as f:
     TOOLS = json.load(f)
 
-# โหลด Tokenizer และ Model (จะทำแค่ครั้งเดียวเมื่อแอปเริ่มทำงาน)
-@st.cache_resource # ใช้แคชเพื่อไม่ให้โหลดโมเดลซ้ำทุกครั้งที่มีการรีเฟรช
+@st.cache_resource
 def load_model_and_tokenizer():
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
     model = AutoModelForCausalLM.from_pretrained(
@@ -28,7 +26,6 @@ def load_model_and_tokenizer():
 tokenizer, model = load_model_and_tokenizer()
 
 def get_model_answer(messages):
-    # print("Model is running...") # อันนี้จะแสดงใน console ที่รัน streamlit
     text = tokenizer.apply_chat_template(
         messages,
         tokenize=False,
@@ -37,43 +34,72 @@ def get_model_answer(messages):
         enable_thinking=False
     )
     inputs = tokenizer(text, return_tensors="pt").to(model.device)
-    # ใช้ no_grad เพื่อประหยัดหน่วยความจำเมื่อไม่ต้องการคำนวณ gradient
     with torch.no_grad():
         outputs = model.generate(**inputs, max_new_tokens=512)
     output_text = tokenizer.batch_decode(outputs)[0][len(text):]
     return output_text
 
-# --- ส่วนของการจัดการแชทใน Streamlit ---
+# --- Streamlit ---
 
-# เริ่มต้นประวัติการสนทนาหากยังไม่มี
+# ✅ Inject CSS to force all input borders to purple
+st.markdown("""
+    <style>
+    /* เปลี่ยนกรอบหลักให้เป็นสีม่วง */
+    div[data-baseweb="input"] > div {
+        border: 2px solid #a020f0 !important;
+        border-radius: 6px;
+        padding: 2px;
+        box-shadow: none !important;
+    }
+
+    /* ตอน focus แล้ว */
+    div[data-baseweb="input"] > div:focus-within {
+        border: 2px solid #a020f0 !important;
+        box-shadow: 0 0 0 2px rgba(160, 32, 240, 0.3) !important;
+    }
+
+    /* input ด้านในไม่ให้แสดงเงาสีแดงเลย */
+    input {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    /* ลบพวกกรอบแดงที่แอบซ่อนอยู่ */
+    .css-1cpxqw2, .css-1d391kg, .css-1y4p8pa {
+        border: 2px solid #a020f0 !important;
+        box-shadow: none !important;
+    }
+
+    /* force กล่อง input ให้ไม่ใช้สีแดงแม้จะ error */
+    div:has(input:focus) {
+        border-color: #a020f0 !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
+if "user_input" not in st.session_state:
+    st.session_state.user_input = ""
+
 if "messages" not in st.session_state:
     st.session_state.messages = [
         {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: 2025-02-01.\n\nCurrent Day: Saturday."},
-        # ไม่ต้องแสดงข้อความ system นี้ในหน้าจอ แต่จำเป็นสำหรับโมเดล
     ]
 
-# แสดงประวัติการสนทนาบนหน้าจอ
-for message in st.session_state.messages:
-    if message["role"] != "system": # ไม่แสดงข้อความ system บนหน้าจอ
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+user_input = st.text_input("พิมพ์คำสั่งที่นี่ แล้วกด Enter หรือกดปุ่มยืนยัน", value=st.session_state.user_input, key="input")
 
-# ช่องป้อนข้อความสำหรับผู้ใช้
-if prompt := st.chat_input("พิมพ์ข้อความของคุณที่นี่..."):
-    # เพิ่มข้อความผู้ใช้เข้าในประวัติการสนทนา
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    # แสดงข้อความผู้ใช้บนหน้าจอ
-    with st.chat_message("user"):
-        st.markdown(prompt)
+submit_button = st.button("ยืนยัน")
 
-    # ให้โมเดลตอบกลับ
-    with st.spinner("โมเดลกำลังคิด..."): # แสดงสถานะว่ากำลังโหลด
-        # ส่งประวัติการสนทนาทั้งหมดให้โมเดลเพื่อรักษา context
+if (user_input and user_input != st.session_state.user_input) or submit_button:
+
+    st.session_state.messages.append({"role": "user", "content": user_input})
+
+    with st.spinner("โมเดลกำลังคิด..."):
         full_conversation_for_model = st.session_state.messages
         response = get_model_answer(full_conversation_for_model)
 
-    # เพิ่มข้อความจากโมเดลเข้าในประวัติการสนทนา
     st.session_state.messages.append({"role": "assistant", "content": response})
-    # แสดงข้อความจากโมเดลบนหน้าจอ
-    with st.chat_message("assistant"):
-        st.markdown(response)
+
+    st.success(f"Qwen: {response}")
+    st.session_state.user_input = ""
