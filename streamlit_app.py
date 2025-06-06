@@ -32,7 +32,7 @@ def main():
     st.title("🗓️ เพิ่มกิจกรรมลง Google Calendar (Online)")
 
     # ดึง query params
-    params = st.experimental_get_query_params()
+    params = st.query_params
     code = params.get("code", [None])[0]
 
     # ถ้ายังไม่ได้ login
@@ -51,7 +51,7 @@ def main():
                     "scopes": creds.scopes
                 }
                 st.success("🎉 ล็อกอินสำเร็จ! พร้อมใช้งานแล้ว")
-                st.experimental_rerun()
+                st.rerun()
             except Exception as e:
                 st.error(f"เกิดข้อผิดพลาด: {e}")
                 return
