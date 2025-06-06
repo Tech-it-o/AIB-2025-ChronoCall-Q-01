@@ -32,7 +32,7 @@ def main():
     st.title("🗓️ เพิ่มกิจกรรมลง Google Calendar (Online)")
 
     # ดึง query params
-    params = st.get_query_params()
+    params = st.experimental_get_query_params()
     code = params.get("code", [None])[0]
 
     # ถ้ายังไม่ได้ login
