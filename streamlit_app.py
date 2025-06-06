@@ -33,7 +33,7 @@ def main():
 
     # ดึง query params
     params = st.query_params
-    code = params.get("code", [None])[0]
+    code = params.get("code", None)
 
     # ถ้ายังไม่ได้ login
     if "credentials" not in st.session_state:
@@ -59,37 +59,11 @@ def main():
             flow = create_flow()
             auth_url = generate_auth_url(flow)
 
-            st.markdown(f'''
-                <a href="{auth_url}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">
-                    <button style="
-                        background-color: #663399;
-                        border: none;
-                        color: white;
-                        padding: 8px 20px;
-                        font-size: 14px;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        font-weight: bold;
-                        box-shadow: 0 4px 10px rgba(106, 13, 173, 0.5);
-                        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-                    " 
-                    onmouseover="this.style.backgroundColor='#7b29e1'; this.style.boxShadow='0 6px 14px rgba(123, 41, 225, 0.7)';"
-                    onmouseout="this.style.backgroundColor='#6a0dad'; this.style.boxShadow='0 4px 10px rgba(106, 13, 173, 0.5)';"
-                    >
-                        🔐 ล็อกอินด้วย Google
-                    </button>
-                </a>
-            ''', unsafe_allow_html=True)
-
-            # st.image("Artboard_32x.png", width=700)
-
+            # ปุ่ม login แบบไม่เปิดแท็บใหม่
+            st.markdown(f'[🔐 ล็อกอินด้วย Google]({auth_url})', unsafe_allow_html=True)
             st.stop()
-            
 
     # ถ้า login แล้ว
-    code = params.get("code", [None])[0]
-    st.write("📦 ได้รับ code จาก Google:", code)
-    
     creds = Credentials(**st.session_state["credentials"])
     service = create_service(creds)
 
