@@ -45,22 +45,29 @@ st.markdown("""
     div:has(input:focus) {
         border-color: #a020f0 !important;
     }
-    </style>
-
-    <style>
-    /* เปลี่ยนสี hover ตอนเมาส์ไปชี้ที่หัวข้อ expander */
-    details:hover {
-        border: 1px solid #4FC3F7 !important;
-        background-color: #E1F5FE !important;
-    }
-
-    /* เปลี่ยนสีข้อความหัวข้อ expander */
-    summary {
-        color: #1565C0 !important;
-        font-weight: bold;
-    }
-    </style>
     
+    /* เปลี่ยนขอบ expander เป็นสีม่วง */
+    details {
+        border: 2px solid #a020f0 !important;
+        border-radius: 6px !important;
+        padding: 0.5em;
+        margin-bottom: 10px;
+    }
+
+    /* ลบสีแดงเวลาชี้เมาส์หรือโฟกัส */
+    details:hover, details:focus, details:active {
+        border: 2px solid #a020f0 !important;
+        box-shadow: none !important;
+        background-color: #faf5ff !important;  /* พื้นหลังอ่อน ๆ เข้ากับสีม่วง */
+    }
+
+    /* หัวข้อ summary ด้านบน */
+    details summary {
+        color: #5e2ca5 !important;
+        font-weight: bold;
+        font-size: 1.05rem;
+    }
+    </style>
 """, unsafe_allow_html=True)
 
 
