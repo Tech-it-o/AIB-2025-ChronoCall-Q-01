@@ -98,9 +98,9 @@ def get_model_answer(messages):
             **inputs,
             max_new_tokens=128,
             do_sample=False,
-            num_beams=1,
-            early_stopping=True
+            num_beams=1
         )
+        
     output_text = tokenizer.batch_decode(outputs)[0][len(text):]
     return output_text
 
