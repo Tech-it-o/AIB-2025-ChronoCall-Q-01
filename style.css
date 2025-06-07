@@ -1,50 +1,51 @@
 @keyframes fadeInTitle {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-1.25rem); } /* -20px */
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInButton {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(1.25rem); } /* 20px */
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .fade-in-title {
-    animation: fadeInTitle 1s ease-out;
+  animation: fadeInTitle 1s ease-out forwards;
 }
 
 .fade-in-button {
-    animation: fadeInButton 1s ease-out;
-    animation-delay: 1s;
-    animation-fill-mode: both;
+  animation: fadeInButton 1s ease-out 1s forwards; /* delay 1s, fill-mode both */
 }
 
 .custom-title {
-    font-size: 60px;
-    font-weight: 800;
-    color: #ffffff;
-    text-align: center;
-    margin-bottom: 30px;
+  font-size: 3.75rem;      /* Tailwind text-6xl = 3.75rem (60px) */
+  font-weight: 800;        /* font-extrabold */
+  color: #a78bfa;          /* Tailwind violet-400 */
+  text-align: center;
+  margin-bottom: 1.875rem; /* mb-7 = 30px */
+  font-family: 'Inter', sans-serif; /* Tailwind font */
+  text-shadow: 0 2px 4px rgba(124, 58, 237, 0.5); /* subtle purple glow */
 }
 
 .login-button {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .login-button a button {
-    background-color: #663399;
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(106, 13, 173, 0.5);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #7c3aed;  /* Tailwind violet-600 */
+  border: none;
+  color: white;
+  padding: 0.625rem 1.5rem;   /* py-2.5 px-6 */
+  font-size: 1rem;            /* text-base */
+  border-radius: 0.5rem;      /* rounded-lg */
+  cursor: pointer;
+  font-weight: 700;           /* font-bold */
+  box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.5), 0 4px 6px -4px rgba(124, 58, 237, 0.3); /* shadow-lg violet */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Inter', sans-serif;
 }
 
 .login-button a button:hover {
-    background-color: #7b29e1;
-    box-shadow: 0 6px 14px rgba(123, 41, 225, 0.7);
+  background-color: #9333ea; /* violet-700 */
+  box-shadow: 0 20px 25px -5px rgba(147, 51, 234, 0.7), 0 10px 10px -5px rgba(147, 51, 234, 0.4);
 }
