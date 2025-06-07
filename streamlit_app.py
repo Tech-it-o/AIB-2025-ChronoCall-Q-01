@@ -293,6 +293,8 @@ def main():
                 </div>
             """, unsafe_allow_html=True)
 
+            st.image("IMG_1358.jpg", use_container_width=True)
+
             st.stop()
 
     # Logged in
@@ -350,8 +352,6 @@ def main():
     user_input = st.text_input("พิมพ์คำสั่งที่นี่ แล้วกด Enter หรือกดปุ่มยืนยัน", value=st.session_state.user_input, key="input")
 
     submit_button = st.button("ยืนยัน")
-
-    st.image("IMG_1358.jpg", use_column_width=True)
 
     if (user_input and user_input != st.session_state.user_input) or submit_button:
         messages = [
