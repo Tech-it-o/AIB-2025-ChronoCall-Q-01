@@ -49,12 +49,16 @@
     box-shadow: 0 6px 14px rgba(123, 41, 225, 0.7);
 }
 
-/* .custom-image {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    display: block;
-    margin: 0 auto 40px auto;
-    animation: fadeInButton 1s ease-out;
-} */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+.fade-in-image {
+  animation: fadeIn 1.5s ease-in forwards;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  display: block;
+  margin: 0 auto 40px auto;
+}

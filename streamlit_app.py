@@ -117,6 +117,11 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 with open("style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        b64_data = base64.b64encode(img_file.read()).decode()
+    return b64_data
+
 def create_flow():
     return Flow.from_client_config(
         {
@@ -294,22 +299,11 @@ def main():
                 </div>
             """, unsafe_allow_html=True)
 
-            image = Image.open("IMG_1358.jpg")
-
-            st.markdown('<div class="image-wrapper">', unsafe_allow_html=True)
-            st.image(image, use_container_width=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-
-            st.markdown("""
-            <style>
-            .image-wrapper img {
-                border-radius: 15px;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                animation: fadeInButton 1s ease-out;
-                margin-bottom: 40px;
-            }
-            </style>
-            """, unsafe_allow_html=True)
+            img_b64 = get_base64_image("IMG_1358.jpg")
+            
+            st.markdown(f'''
+                <img src="data:image/jpeg;base64,{img_b64}" class="fade-in-image">
+            ''', unsafe_allow_html=True)
 
             st.stop()
 
