@@ -46,6 +46,21 @@ st.markdown("""
         border-color: #a020f0 !important;
     }
     </style>
+
+    <style>
+    /* เปลี่ยนสี hover ตอนเมาส์ไปชี้ที่หัวข้อ expander */
+    details:hover {
+        border: 1px solid #4FC3F7 !important;
+        background-color: #E1F5FE !important;
+    }
+
+    /* เปลี่ยนสีข้อความหัวข้อ expander */
+    summary {
+        color: #1565C0 !important;
+        font-weight: bold;
+    }
+    </style>
+    
 """, unsafe_allow_html=True)
 
 
