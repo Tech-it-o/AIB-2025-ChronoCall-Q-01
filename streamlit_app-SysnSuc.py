@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import datetime, timedelta
+import datetime
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -126,91 +126,6 @@ def generate_auth_url(flow):
 def create_service(creds):
     return build("calendar", "v3", credentials=creds)
 
-# --- Adding ---
-
-def handle_calendar_action(service, action_data):
-    name = action_data.get("name")
-    args = action_data.get("arguments", {})
-    
-    if name == "add_event_date":
-        date_str = args["date"]
-        time_str = args["time"]
-        title = args["title"]
-
-        dt_start = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M")
-        dt_end = dt_start + timedelta(hours=1)
-
-        event = {
-            'summary': title,
-            'start': {
-                'dateTime': dt_start.isoformat(),
-                'timeZone': 'Asia/Bangkok',
-            },
-            'end': {
-                'dateTime': dt_end.isoformat(),
-                'timeZone': 'Asia/Bangkok',
-            },
-        }
-
-        created = service.events().insert(calendarId='primary', body=event).execute()
-        st.success(f"✅ เพิ่มกิจกรรม: {title} [ดูใน Calendar]({created.get('htmlLink')})")
-
-    elif name == "delete_event_date":
-        date_str = args["date"]
-        title = args["title"]
-        events = get_events_by_date_and_title(service, date_str, title)
-        if events:
-            for event in events:
-                service.events().delete(calendarId='primary', eventId=event['id']).execute()
-            st.success(f"🗑 ลบนัด: {title} ในวันที่ {date_str} แล้ว")
-        else:
-            st.warning(f"ไม่พบนัด: {title} ในวันที่ {date_str}")
-
-    elif name == "update_event":
-        date_str = args["date"]
-        new_time_str = args["time"]
-        title = args["title"]
-        events = get_events_by_date_and_title(service, date_str, title)
-
-        if events:
-            for event in events:
-                new_start = datetime.strptime(f"{date_str} {new_time_str}", "%Y-%m-%d %H:%M")
-                new_end = new_start + timedelta(hours=1)
-                event["start"]["dateTime"] = new_start.isoformat()
-                event["end"]["dateTime"] = new_end.isoformat()
-                service.events().update(calendarId='primary', eventId=event["id"], body=event).execute()
-            st.success(f"✏️ เปลี่ยนเวลานัด: {title} เป็น {new_time_str}")
-        else:
-            st.warning(f"ไม่พบนัด: {title} ในวันที่ {date_str}")
-
-    elif name == "view_event_date":
-        date_str = args["date"]
-        events = get_events_by_date(service, date_str)
-        if not events:
-            st.info("ไม่มีนัดในวันนี้")
-        else:
-            st.write(f"📅 นัดทั้งหมดในวันที่ {date_str}:")
-            for e in events:
-                time = e['start'].get('dateTime', e['start'].get('date'))
-                st.write(f"- {e['summary']} เวลา: {time}")
-
-def get_events_by_date(service, date_str):
-    date_obj = datetime.strptime(date_str, "%Y-%m-%d")
-    start = date_obj.isoformat() + 'T00:00:00Z'
-    end = (date_obj + timedelta(days=1)).isoformat() + 'T00:00:00Z'
-    events_result = service.events().list(
-        calendarId='primary',
-        timeMin=start,
-        timeMax=end,
-        singleEvents=True,
-        orderBy='startTime'
-    ).execute()
-    return events_result.get('items', [])
-
-def get_events_by_date_and_title(service, date_str, title):
-    events = get_events_by_date(service, date_str)
-    return [e for e in events if e.get("summary") == title]
-
 # --- Streamlit ---
 
 def main():
@@ -269,7 +184,7 @@ def main():
 
     if "messages" not in st.session_state:
         st.session_state.messages = [
-            {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: 2025-06-07.\n\nCurrent Day: Saturday."},
+            {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: 2025-02-01.\n\nCurrent Day: Saturday."},
         ]
 
     user_input = st.text_input("พิมพ์คำสั่งที่นี่ แล้วกด Enter หรือกดปุ่มยืนยัน", value=st.session_state.user_input, key="input")
@@ -289,7 +204,29 @@ def main():
         func_call_dict = convert_to_dict(response)
         st.success(f"Qwen: {func_call_dict}")
         st.session_state.user_input = ""
-        handle_calendar_action(service, func_call_dict)
+
+    # with st.form("event_form"):
+    #     summary = st.text_input("หัวข้อกิจกรรม", "ประชุมทีม")
+    #     location = st.text_input("สถานที่", "Google Meet")
+    #     start_date = st.date_input("วันที่เริ่ม", datetime.date.today())
+    #     end_date = st.date_input("วันที่สิ้นสุด", datetime.date.today())
+    #     submitted = st.form_submit_button("เพิ่มกิจกรรม")
+
+    # if submitted:
+    #     event = {
+    #         'summary': summary,
+    #         'location': location,
+    #         'start': {
+    #             'date': start_date.strftime("%Y-%m-%d"),
+    #             'timeZone': 'Asia/Bangkok',
+    #         },
+    #         'end': {
+    #             'date': end_date.strftime("%Y-%m-%d"),
+    #             'timeZone': 'Asia/Bangkok',
+    #         },
+    #     }
+    #     created_event = service.events().insert(calendarId='primary', body=event).execute()
+    #     st.success(f"✅ เพิ่มกิจกรรมสำเร็จ: [คลิกดูใน Calendar]({created_event.get('htmlLink')})")
 
 if __name__ == "__main__":
     main()
