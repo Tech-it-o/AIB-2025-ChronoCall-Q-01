@@ -4,6 +4,8 @@ from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
+st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🗓️")
+
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 with open("style.css") as f:
@@ -32,7 +34,6 @@ def create_service(creds):
     return build("calendar", "v3", credentials=creds)
 
 def main():
-    st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🗓️")
     # st.title("ChronoCall-Q")
 
     # ดึง query params
