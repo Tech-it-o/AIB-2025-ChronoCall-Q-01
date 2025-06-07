@@ -1,5 +1,5 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch # ต้อง import torch ด้วย
+import torch
 import streamlit as st
 import json
 
