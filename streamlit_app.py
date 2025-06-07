@@ -198,7 +198,7 @@ def main():
 
         st.session_state.messages.append({"role": "assistant", "content": response})
 
-        st.success(f"Qwen: {response}")
+        st.success(f"Qwen: {convert_to_dict(response)}")
         st.session_state.user_input = ""
 
     # with st.form("event_form"):
