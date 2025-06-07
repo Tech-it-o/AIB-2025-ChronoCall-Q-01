@@ -60,27 +60,58 @@ def main():
             flow = create_flow()
             auth_url = generate_auth_url(flow)
 
-            st.markdown(f'''
-                <a href="{auth_url}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">
-                    <button style="
+            st.markdown(f"""
+                <style>
+                    @keyframes fadeIn {{
+                        from {{ opacity: 0; transform: translateY(-20px); }}
+                        to {{ opacity: 1; transform: translateY(0); }}
+                    }}
+
+                    .fade-in {{
+                        animation: fadeIn 1s ease-out;
+                    }}
+
+                    .custom-title {{
+                        font-size: 60px;
+                        font-weight: 800;
+                        color: #663399;
+                        text-align: center;
+                        margin-bottom: 30px;
+                    }}
+
+                    .login-button {{
+                        display: flex;
+                        justify-content: center;
+                    }}
+
+                    .login-button a button {{
                         background-color: #663399;
                         border: none;
                         color: white;
-                        padding: 8px 20px;
-                        font-size: 14px;
+                        padding: 10px 24px;
+                        font-size: 16px;
                         border-radius: 8px;
                         cursor: pointer;
                         font-weight: bold;
                         box-shadow: 0 4px 10px rgba(106, 13, 173, 0.5);
                         transition: background-color 0.3s ease, box-shadow 0.3s ease;
-                    " 
-                    onmouseover="this.style.backgroundColor='#7b29e1'; this.style.boxShadow='0 6px 14px rgba(123, 41, 225, 0.7)';"
-                    onmouseout="this.style.backgroundColor='#6a0dad'; this.style.boxShadow='0 4px 10px rgba(106, 13, 173, 0.5)';"
-                    >
-                        🔐 ล็อกอินด้วย Google
-                    </button>
-                </a>
-            ''', unsafe_allow_html=True)
+                    }}
+
+                    .login-button a button:hover {{
+                        background-color: #7b29e1;
+                        box-shadow: 0 6px 14px rgba(123, 41, 225, 0.7);
+                    }}
+                </style>
+
+                <div class="fade-in">
+                    <div class="custom-title">ChronoCall-Q</div>
+                    <div class="login-button">
+                        <a href="{auth_url}" target="_blank" rel="noopener noreferrer">
+                            <button>🔐 ล็อกอินด้วย Google</button>
+                        </a>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
 
             st.stop()
 
