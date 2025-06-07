@@ -351,6 +351,8 @@ def main():
 
     submit_button = st.button("ยืนยัน")
 
+    st.image("IMG_1358.jpg", use_column_width=True)
+
     if (user_input and user_input != st.session_state.user_input) or submit_button:
         messages = [
             {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: 2025-06-07.\n\nCurrent Day: Saturday."},
