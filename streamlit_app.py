@@ -129,6 +129,17 @@ def create_service(creds):
 
 # --- Adding ---
 
+def extract_time_or_dash(iso_time: str) -> str:
+    try:
+        dt = datetime.fromisoformat(iso_time)
+
+        if "T" in iso_time:
+            return dt.strftime("%H:%M")
+        else:
+            return "-"
+    except ValueError:
+        return "-"
+
 def handle_calendar_action(service, action_data):
     name = action_data.get("name")
     args = action_data.get("arguments", {})
@@ -192,7 +203,8 @@ def handle_calendar_action(service, action_data):
         else:
             st.write(f"📅 นัดทั้งหมดในวันที่ {date_str}:")
             for e in events:
-                time = e['start'].get('dateTime', e['start'].get('date'))
+                date = e['start'].get('dateTime', e['start'].get('date'))
+                time = extract_time_or_dash(date)
                 st.write(f"- {e['summary']} เวลา: {time}")
 
 def get_events_by_date(service, date_str):
@@ -200,9 +212,9 @@ def get_events_by_date(service, date_str):
     start = date_obj.strftime("%Y-%m-%dT00:00:00Z")
     end = (date_obj + timedelta(days=1)).strftime("%Y-%m-%dT00:00:00Z")
     
-    # 🧪 DEBUG
-    st.write(f"🔎 Fetching events for date: {date_str}")
-    st.write(f"timeMin = {start}, timeMax = {end}")
+    # # DEBUG
+    # st.write(f"Fetching events for date: {date_str}")
+    # st.write(f"timeMin = {start}, timeMax = {end}")
 
     try:
         events_result = service.events().list(
@@ -272,7 +284,7 @@ def main():
 
             st.stop()
 
-    # ถ้า login แล้ว
+    # Logged in
     creds = Credentials(**st.session_state["credentials"])
     service = create_service(creds)
 
