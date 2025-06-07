@@ -293,7 +293,9 @@ def main():
                 </div>
             """, unsafe_allow_html=True)
 
-            st.image("IMG_1358.jpg", use_container_width=True)
+            st.markdown(f"""
+                <img src="IMG_1358.jpg" class="custom-image">
+            """, unsafe_allow_html=True)
 
             st.stop()
 
