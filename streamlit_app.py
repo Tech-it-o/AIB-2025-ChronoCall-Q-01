@@ -34,7 +34,7 @@ def create_service(creds):
     return build("calendar", "v3", credentials=creds)
 
 def main():
-    # st.title("ChronoCall-Q")
+    st.title("ChronoCall-Q")
 
     # ดึง query params
     params = st.query_params
