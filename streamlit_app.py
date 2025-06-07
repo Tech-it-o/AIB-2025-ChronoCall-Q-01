@@ -197,8 +197,8 @@ def handle_calendar_action(service, action_data):
 
 def get_events_by_date(service, date_str):
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
-    start = date_obj.isoformat() + 'T00:00:00Z'
-    end = (date_obj + timedelta(days=1)).isoformat() + 'T00:00:00Z'
+    start = date_obj.strftime("%Y-%m-%dT00:00:00Z")
+    end = (date_obj + timedelta(days=1)).strftime("%Y-%m-%dT00:00:00Z")
     
     # 🧪 DEBUG
     st.write(f"🔎 Fetching events for date: {date_str}")
