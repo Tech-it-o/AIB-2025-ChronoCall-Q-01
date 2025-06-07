@@ -316,19 +316,21 @@ def main():
         st.success(f"Qwen: {func_call_dict}")
         st.session_state.user_input = ""
 
-        function_output = handle_calendar_action(service, func_call_dict)
-        
-        if function_output:
-            st.session_state.messages.append({
-                "role": "function",
-                "name": func_call_dict["name"],
-                "content": function_output
-            })
+        handle_calendar_action(service, func_call_dict)
 
-            with st.spinner("โมเดลกำลังตอบกลับ..."):
-                response = get_model_answer(st.session_state.messages)
-                st.session_state.messages.append({"role": "assistant", "content": response})
-                st.success(f"Qwen: {response}")
+        # function_output = handle_calendar_action(service, func_call_dict)
+        
+        # if function_output:
+        #     st.session_state.messages.append({
+        #         "role": "function",
+        #         "name": func_call_dict["name"],
+        #         "content": function_output
+        #     })
+
+        #     with st.spinner("โมเดลกำลังตอบกลับ..."):
+        #         response = get_model_answer(st.session_state.messages)
+        #         st.session_state.messages.append({"role": "assistant", "content": response})
+        #         st.success(f"Qwen: {response}")
 
 if __name__ == "__main__":
     main()
