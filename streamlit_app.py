@@ -10,6 +10,7 @@ import json
 import re
 import ast
 from PIL import Image
+import base64
 
 st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🗓️")
 
@@ -300,7 +301,7 @@ def main():
             """, unsafe_allow_html=True)
 
             img_b64 = get_base64_image("IMG_1358.jpg")
-            
+
             st.markdown(f'''
                 <img src="data:image/jpeg;base64,{img_b64}" class="fade-in-image">
             ''', unsafe_allow_html=True)
