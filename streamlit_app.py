@@ -76,7 +76,7 @@ def load_model_and_tokenizer():
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
     model = AutoModelForCausalLM.from_pretrained(
         model_name_or_path,
-        torch_dtype=torch.bfloat16, # ระบุ dtype ที่ชัดเจน
+        torch_dtype=torch.float32,
         device_map="auto",
         trust_remote_code=True,
     )
@@ -94,7 +94,13 @@ def get_model_answer(messages):
     )
     inputs = tokenizer(text, return_tensors="pt").to(model.device)
     with torch.no_grad():
-        outputs = model.generate(**inputs, max_new_tokens=512)
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=128,
+            do_sample=False,
+            num_beams=1,
+            early_stopping=True
+        )
     output_text = tokenizer.batch_decode(outputs)[0][len(text):]
     return output_text
 
