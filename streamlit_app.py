@@ -45,12 +45,6 @@ st.markdown("""
     div:has(input:focus) {
         border-color: #a020f0 !important;
     }
-    
-    /* เมื่อเอาเมาส์ไปชี้ที่ expander ให้ขอบเป็นสีม่วง */
-    details:hover {
-        border: 2px solid #a020f0 !important;
-        border-radius: 6px;
-    }
     </style>
 """, unsafe_allow_html=True)
 
