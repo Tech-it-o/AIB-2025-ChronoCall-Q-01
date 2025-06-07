@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import json
@@ -198,14 +199,28 @@ def get_events_by_date(service, date_str):
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
     start = date_obj.isoformat() + 'T00:00:00Z'
     end = (date_obj + timedelta(days=1)).isoformat() + 'T00:00:00Z'
-    events_result = service.events().list(
-        calendarId='primary',
-        timeMin=start,
-        timeMax=end,
-        singleEvents=True,
-        orderBy='startTime'
-    ).execute()
-    return events_result.get('items', [])
+    
+    # 🧪 DEBUG
+    st.write(f"🔎 Fetching events for date: {date_str}")
+    st.write(f"timeMin = {start}, timeMax = {end}")
+
+    try:
+        events_result = service.events().list(
+            calendarId='primary',
+            timeMin=start,
+            timeMax=end,
+            singleEvents=True,
+            orderBy='startTime'
+        ).execute()
+        return events_result.get('items', [])
+    
+    except HttpError as error:
+        st.error(f"❌ Google Calendar API error: {error}")
+        return []
+
+    except Exception as e:
+        st.error(f"❌ Unknown error: {e}")
+        return []
 
 def get_events_by_date_and_title(service, date_str, title):
     events = get_events_by_date(service, date_str)
