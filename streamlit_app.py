@@ -45,12 +45,6 @@ st.markdown("""
     div:has(input:focus) {
         border-color: #a020f0 !important;
     }
-    
-    /* เปลี่ยนขอบตอน hover */
-    details:hover {
-        border: 2px solid #a020f0 !important;
-        border-radius: 6px;
-    }
 
     /* เปลี่ยนสีข้อความหัวข้อเป็นม่วงเมื่อ hover */
     details:hover > summary {
