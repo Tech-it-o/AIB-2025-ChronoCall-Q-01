@@ -297,7 +297,7 @@ def main():
             image = Image.open("IMG_1358.jpg")
 
             st.markdown('<div class="image-wrapper">', unsafe_allow_html=True)
-            st.image(image, use_column_width=True)
+            st.image(image, use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
             st.stop()
