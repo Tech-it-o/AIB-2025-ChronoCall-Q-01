@@ -9,6 +9,7 @@ import torch
 import json
 import re
 import ast
+from PIL import Image
 
 st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🗓️")
 
@@ -293,9 +294,11 @@ def main():
                 </div>
             """, unsafe_allow_html=True)
 
-            st.markdown(f"""
-                <img src="IMG_1358.jpg" class="custom-image">
-            """, unsafe_allow_html=True)
+            image = Image.open("IMG_1358.jpg")
+
+            st.markdown('<div class="image-wrapper">', unsafe_allow_html=True)
+            st.image(image, use_column_width=True)
+            st.markdown('</div>', unsafe_allow_html=True)
 
             st.stop()
 
