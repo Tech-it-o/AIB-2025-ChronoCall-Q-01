@@ -6,6 +6,8 @@ from googleapiclient.discovery import build
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import json
+import re
+import ast
 
 st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🗓️")
 
@@ -44,6 +46,19 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
+def convert_to_dict(text):
+    match = re.search(r"<tool_call>\n(.*?)\n</tool_call>", text)
+
+    if match:
+        tool_dict_str = match.group(1)
+        try:
+            result = ast.literal_eval(tool_dict_str)
+            return(result)
+        except Exception as e:
+            return({})
+    else:
+        return({})
 
 # --- Model ---
 
