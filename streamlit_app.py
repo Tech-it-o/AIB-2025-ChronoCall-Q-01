@@ -52,9 +52,10 @@ st.markdown("""
         font-weight: bold;
     }
 
-    /* เปลี่ยนสี caret ^ (ไอคอนสามเหลี่ยม) ตอน hover */
-    details:hover summary::-webkit-details-marker {
-        color: #9D00FF !important;
+    /* caret (ลูกศร) สีม่วงตอน hover หรือ open */
+    details:hover summary::-webkit-details-marker,
+    details[open] summary::-webkit-details-marker {
+        color: #a020f0 !important;
     }
     </style>
 """, unsafe_allow_html=True)
