@@ -289,7 +289,30 @@ def main():
     service = create_service(creds)
 
     st.title("ChronoCall-Q")
-    st.caption("พิมพ์คำสั่งของคุณด้านล่างแล้วกด Enter หรือปุ่ม 'ยืนยัน'")
+    st.caption("วิธีใช้งาน")
+    
+    st.markdown("""
+    ## 1. การเพิ่มเหตุการณ์ (Add Event)
+    เพื่อเพิ่มเหตุการณ์ใหม่ ต้องระบุ:
+    - **ชื่อเหตุการณ์**
+    - **วันที่** (รูปแบบ: `YYYY-MM-DD`)
+    - **เวลา** (รูปแบบ: `HH:MM`)
+
+    ## 2. การลบเหตุการณ์ (Delete Event)
+    เพื่อทำการลบเหตุการณ์ ต้องระบุ:
+    - **ชื่อเหตุการณ์**
+    - **วันที่** (รูปแบบ: `YYYY-MM-DD`)
+
+    ## 3. การอัปเดตเหตุการณ์ (Update Event)
+    เพื่อเปลี่ยนเวลาเหตุการณ์ในวันเดียวกัน ต้องระบุ:
+    - **ชื่อเหตุการณ์**
+    - **วันที่** (รูปแบบ: `YYYY-MM-DD`)
+    - **เวลาใหม่** (รูปแบบ: `HH:MM`)
+
+    ## 4. การดูเหตุการณ์ (View Events)
+    เพื่อดูรายการเหตุการณ์ในวันใดวันหนึ่ง ต้องระบุ:
+    - **วันที่ที่ต้องการดู** (รูปแบบ: `YYYY-MM-DD`)
+    """)
 
     if "user_input" not in st.session_state:
         st.session_state.user_input = ""
@@ -312,7 +335,7 @@ def main():
         with st.spinner("โมเดลกำลังคิด..."):
             response = get_model_answer(messages)
 
-        st.success(f"Qwen: {response}")
+        st.success(f"Chrono: {response}")
         func_call_dict = convert_to_dict(response)
         handle_calendar_action(service, func_call_dict)
 
