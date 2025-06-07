@@ -155,7 +155,6 @@ def handle_calendar_action(service, action_data):
 
         created = service.events().insert(calendarId='primary', body=event).execute()
         st.success(f"✅ เพิ่มกิจกรรม: {title} [ดูใน Calendar]({created.get('htmlLink')})")
-        return f"เพิ่มกิจกรรมสำเร็จ: {title}"
 
     elif name == "delete_event_date":
         date_str = args["date"]
@@ -165,10 +164,8 @@ def handle_calendar_action(service, action_data):
             for event in events:
                 service.events().delete(calendarId='primary', eventId=event['id']).execute()
             st.success(f"🗑 ลบนัด: {title} ในวันที่ {date_str} แล้ว")
-            return(f"ลบนัด: {title} ในวันที่ {date_str} แล้ว")
         else:
             st.warning(f"ไม่พบนัด: {title} ในวันที่ {date_str}")
-            return(f"ไม่พบนัด: {title} ในวันที่ {date_str}")
 
     elif name == "update_event":
         date_str = args["date"]
@@ -184,27 +181,19 @@ def handle_calendar_action(service, action_data):
                 event["end"]["dateTime"] = new_end.isoformat()
                 service.events().update(calendarId='primary', eventId=event["id"], body=event).execute()
             st.success(f"✏️ เปลี่ยนเวลานัด: {title} เป็น {new_time_str}")
-            return(f"เปลี่ยนเวลานัด: {title} เป็น {new_time_str}")
         else:
             st.warning(f"ไม่พบนัด: {title} ในวันที่ {date_str}")
-            return(f"ไม่พบนัด: {title} ในวันที่ {date_str}")
 
     elif name == "view_event_date":
         date_str = args["date"]
         events = get_events_by_date(service, date_str)
-        
         if not events:
             st.info("ไม่มีนัดในวันนี้")
-            return "ไม่มีนัดในวันนี้"
         else:
             st.write(f"📅 นัดทั้งหมดในวันที่ {date_str}:")
-            result_message = f"📅 นัดทั้งหมดในวันที่ {date_str}:\n"
             for e in events:
                 time = e['start'].get('dateTime', e['start'].get('date'))
-                event_info = f"- {e['summary']} เวลา: {time}"
-                st.write(event_info)
-                result_message += event_info + "\n"
-            return result_message
+                st.write(f"- {e['summary']} เวลา: {time}")
 
 def get_events_by_date(service, date_str):
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
@@ -293,42 +282,29 @@ def main():
     if "user_input" not in st.session_state:
         st.session_state.user_input = ""
 
-    if "messages" not in st.session_state:
-        st.session_state.messages = [
-            {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: 2025-06-07.\n\nCurrent Day: Saturday."},
-        ]
+    messages = [
+        {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: 2025-06-07.\n\nCurrent Day: Saturday."},
+    ]
+
 
     user_input = st.text_input("พิมพ์คำสั่งที่นี่ แล้วกด Enter หรือกดปุ่มยืนยัน", value=st.session_state.user_input, key="input")
 
     submit_button = st.button("ยืนยัน")
 
     if (user_input and user_input != st.session_state.user_input) or submit_button:
-
-        st.session_state.messages.append({"role": "user", "content": user_input})
+        messages = [
+            {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: 2025-06-07.\n\nCurrent Day: Saturday."},
+            {"role": "user", "content": user_input}
+        ]
 
         with st.spinner("โมเดลกำลังคิด..."):
-            full_conversation_for_model = st.session_state.messages
-            response = get_model_answer(full_conversation_for_model)
+            response = get_model_answer(messages)
 
-        st.session_state.messages.append({"role": "assistant", "content": response})
-
+        st.success(f"Qwen: {response}")
         func_call_dict = convert_to_dict(response)
-        st.success(f"Qwen: {func_call_dict}")
+        handle_calendar_action(service, func_call_dict)
+
         st.session_state.user_input = ""
-
-        function_output = handle_calendar_action(service, func_call_dict)
-        
-        if function_output:
-            st.session_state.messages.append({
-                "role": "function",
-                "name": func_call_dict["name"],
-                "content": function_output
-            })
-
-            with st.spinner("โมเดลกำลังตอบกลับ..."):
-                response = get_model_answer(st.session_state.messages)
-                st.session_state.messages.append({"role": "assistant", "content": response})
-                st.success(f"Qwen: {response}")
 
 if __name__ == "__main__":
     main()
