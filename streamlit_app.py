@@ -46,12 +46,6 @@ st.markdown("""
         border-color: #a020f0 !important;
     }
 
-    # /* ขอบม่วงตอน hover หรือ open */
-    # details:hover, details[open] {
-    #     border: 2px solid #a020f0 !important;
-    #     border-radius: 6px !important;
-    # }
-
     /* เปลี่ยนสีข้อความหัวข้อเป็นม่วงเมื่อ hover */
     details:hover > summary {
         color: #9D00FF !important;
