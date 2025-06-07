@@ -32,7 +32,7 @@ def create_service(creds):
     return build("calendar", "v3", credentials=creds)
 
 def main():
-    # st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🗓️")
+    st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🗓️")
     # st.title("ChronoCall-Q")
 
     # ดึง query params
