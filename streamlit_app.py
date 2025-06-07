@@ -46,26 +46,10 @@ st.markdown("""
         border-color: #a020f0 !important;
     }
     
-    /* เปลี่ยนขอบ expander เป็นสีม่วง */
-    details {
+    /* เมื่อเอาเมาส์ไปชี้ที่ expander ให้ขอบเป็นสีม่วง */
+    details:hover {
         border: 2px solid #a020f0 !important;
-        border-radius: 6px !important;
-        padding: 0.5em;
-        margin-bottom: 10px;
-    }
-
-    /* ลบสีแดงเวลาชี้เมาส์หรือโฟกัส */
-    details:hover, details:focus, details:active {
-        border: 2px solid #a020f0 !important;
-        box-shadow: none !important;
-        background-color: #faf5ff !important;  /* พื้นหลังอ่อน ๆ เข้ากับสีม่วง */
-    }
-
-    /* หัวข้อ summary ด้านบน */
-    details summary {
-        color: #5e2ca5 !important;
-        font-weight: bold;
-        font-size: 1.05rem;
+        border-radius: 6px;
     }
     </style>
 """, unsafe_allow_html=True)
