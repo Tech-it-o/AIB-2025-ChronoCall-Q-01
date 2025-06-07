@@ -111,7 +111,7 @@ def main():
                 <!-- ปุ่ม ล่าช้า -->
                 <div class="fade-in-button login-button">
                     <a href="{auth_url}" target="_blank" rel="noopener noreferrer">
-                        <button>🔐 ล็อกอินด้วย Google</button>
+                        <button>Login with Google</button>
                     </a>
                 </div>
             """, unsafe_allow_html=True)
