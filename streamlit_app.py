@@ -300,6 +300,17 @@ def main():
             st.image(image, use_container_width=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
+            st.markdown("""
+            <style>
+            .image-wrapper img {
+                border-radius: 15px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                animation: fadeInButton 1s ease-out;
+                margin-bottom: 40px;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+
             st.stop()
 
     # Logged in
