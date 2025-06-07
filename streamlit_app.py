@@ -48,7 +48,7 @@ st.markdown("""
 
     /* เปลี่ยนสีข้อความหัวข้อเป็นม่วงเมื่อ hover */
     details:hover > summary {
-        color: #a020f0 !important;
+        color: #9D00FF !important;
         font-weight: bold;
     }
     </style>
