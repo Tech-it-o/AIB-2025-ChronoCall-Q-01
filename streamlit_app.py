@@ -52,37 +52,15 @@ st.markdown("""
         border-radius: 6px !important;
     }
 
-    /* ข้อความหัวข้อม่วงตอน hover หรือ open */
-    details:hover > summary,
-    details[open] > summary {
-        color: #a020f0 !important;
-        font-weight: bold !important;
-        cursor: pointer !important;
+    /* เปลี่ยนสีข้อความหัวข้อเป็นม่วงเมื่อ hover */
+    details:hover > summary {
+        color: #9D00FF !important;
+        font-weight: bold;
     }
 
-    /* caret (ลูกศร) สีม่วงตอน hover หรือ open */
-    details:hover summary::-webkit-details-marker,
-    details[open] summary::-webkit-details-marker {
-        color: #a020f0 !important;
-    }
-
-    /* แก้ cursor เป็น pointer ตอนชี้ที่ summary ตลอดเวลา (ไม่ให้เป็น default) */
-    summary {
-        cursor: pointer !important;
-    }
-
-    /* ลบสีแดง outline หรือ shadow ที่อาจขึ้นเวลาคลิกหรือโฟกัส */
-    details:focus-visible,
-    details:focus {
-        outline: none !important;
-        box-shadow: none !important;
-    }
-
-    /* ลบสีแดงจาก error หรือ focus แบบอื่นๆ */
-    details summary:focus-visible,
-    details summary:focus {
-        outline: none !important;
-        box-shadow: none !important;
+    /* เปลี่ยนสี caret ^ (ไอคอนสามเหลี่ยม) ตอน hover */
+    details:hover summary::-webkit-details-marker {
+        color: #9D00FF !important;
     }
     </style>
 """, unsafe_allow_html=True)
