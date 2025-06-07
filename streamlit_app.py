@@ -51,6 +51,11 @@ st.markdown("""
         color: #9D00FF !important;
         font-weight: bold;
     }
+
+    /* เปลี่ยนสี caret ^ (ไอคอนสามเหลี่ยม) ตอน hover */
+    details:hover summary::-webkit-details-marker {
+        color: #9D00FF !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
