@@ -3,8 +3,47 @@ import datetime
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+import json
 
 st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🗓️")
+
+# --- Model ---
+
+model_name_or_path = "TechitoTamani/Qwen3-0.6B_FinetuneWithMyData-Merged"
+
+with open('tools.json', 'r', encoding='utf-8') as f:
+    TOOLS = json.load(f)
+
+@st.cache_resource
+def load_model_and_tokenizer():
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name_or_path,
+        torch_dtype=torch.bfloat16, # ระบุ dtype ที่ชัดเจน
+        device_map="auto",
+        trust_remote_code=True,
+    )
+    return tokenizer, model
+
+tokenizer, model = load_model_and_tokenizer()
+
+def get_model_answer(messages):
+    text = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True,
+        tools=TOOLS,
+        enable_thinking=False
+    )
+    inputs = tokenizer(text, return_tensors="pt").to(model.device)
+    with torch.no_grad():
+        outputs = model.generate(**inputs, max_new_tokens=512)
+    output_text = tokenizer.batch_decode(outputs)[0][len(text):]
+    return output_text
+
+# --- Calendar ---
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
@@ -32,6 +71,8 @@ def generate_auth_url(flow):
 
 def create_service(creds):
     return build("calendar", "v3", credentials=creds)
+
+# --- Streamlit ---
 
 def main():
 
