@@ -34,7 +34,6 @@ def create_service(creds):
     return build("calendar", "v3", credentials=creds)
 
 def main():
-    st.title("ChronoCall-Q")
 
     # ดึง query params
     params = st.query_params
@@ -81,6 +80,8 @@ def main():
     # ถ้า login แล้ว
     creds = Credentials(**st.session_state["credentials"])
     service = create_service(creds)
+
+    st.title("ChronoCall-Q")
 
     with st.form("event_form"):
         summary = st.text_input("หัวข้อกิจกรรม", "ประชุมทีม")
