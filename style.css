@@ -48,3 +48,16 @@
     background-color: #7b29e1;
     box-shadow: 0 6px 14px rgba(123, 41, 225, 0.7);
 }
+
+body {
+  background: linear-gradient(135deg, #6b21a8, #9333ea, #c084fc);
+  background-size: 600% 600%;
+  animation: gradientShift 10s ease infinite;
+  color: white;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
