@@ -346,7 +346,7 @@ def main():
             if st.button("ส่งคำขอเข้าร่วม Beta Test"):
                 if email:
                     if send_email(email):
-                        st.success("ส่งคำขอเรียบร้อยแล้ว! เราจะติดต่อกลับเร็ว ๆ นี้ ❤️")
+                        st.success("ส่งคำขอเรียบร้อยแล้ว!")
                     else:
                         st.error("เกิดข้อผิดพลาดในการส่ง กรุณาลองใหม่อีกครั้ง")
                 else:
