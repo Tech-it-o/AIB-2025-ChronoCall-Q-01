@@ -63,3 +63,22 @@
   display: block;
   margin: 40px auto 40px auto;  /* เพิ่ม margin-top 40px */
 }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.fade-in-up {
+    animation: fadeInUp 1s ease forwards;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #555;
+    font-size: 16px;
+    text-align: center;
+}

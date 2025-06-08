@@ -336,7 +336,7 @@ def main():
             # --- Emali sender ---
 
             st.markdown("""
-            <div style="text-align:center; color:#555; font-size: 16px; margin-bottom: 20px;">
+            <div class="fade-in-up">
                 <p>ถ้า <strong>Login ไม่ได้ใช่ไหม?</strong><br>ไม่เป็นไร! ส่งคำขอเข้าร่วม Beta Test มาให้เราก่อนได้เลย</p>
             </div>
             """, unsafe_allow_html=True)
