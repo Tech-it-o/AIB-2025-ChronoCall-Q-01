@@ -75,7 +75,7 @@
     }
 }
 .fade-in-up {
-    animation: fadeInUp 1.25s ease forwards;
+    animation: fadeInUp 1.75s ease forwards;
     margin-top: 40px;
     margin-bottom: 20px;
     color: #ffffff;
