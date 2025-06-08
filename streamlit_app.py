@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime, timedelta
+import pytz
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -9,7 +10,6 @@ import torch
 import json
 import re
 import ast
-from PIL import Image
 import base64
 import smtplib
 from email.mime.text import MIMEText
@@ -419,9 +419,21 @@ def main():
     submit_button = st.button("ยืนยัน")
 
     if (user_input and user_input != st.session_state.user_input) or submit_button:
+
+        bangkok_tz = pytz.timezone("Asia/Bangkok")
+        now = datetime.now(bangkok_tz)
+        current_date = now.strftime("%Y-%m-%d")
+        current_day = now.strftime("%A")
+
         messages = [
-            {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: 2025-06-07.\n\nCurrent Day: Saturday."},
-            {"role": "user", "content": user_input}
+            {
+                "role": "system",
+                "content": f"You are Qwen, created by Alibaba Cloud. You are a helpful assistant.\n\nCurrent Date: {current_date}.\n\nCurrent Day: {current_day}."
+            },
+            {
+                "role": "user",
+                "content": user_input
+            }
         ]
 
         with st.spinner("โมเดลกำลังคิด..."):
