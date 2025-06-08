@@ -319,6 +319,8 @@ def main():
             flow = create_flow()
             auth_url = generate_auth_url(flow)
 
+            # --- Title + Login ---
+
             st.markdown(f"""
                 <!-- ชื่อ -->
                 <div class="fade-in-title custom-title">ChronoCall-Q</div>
@@ -331,20 +333,32 @@ def main():
                 </div>
             """, unsafe_allow_html=True)
 
+            # --- Emali sender ---
+
+            st.markdown("""
+            <div style="text-align:center; color:#555; font-size: 16px; margin-bottom: 20px;">
+                <p>ถ้า <strong>Login ไม่ได้ใช่ไหม?</strong><br>ไม่เป็นไร! ส่งคำขอเข้าร่วม Beta Test มาให้เราก่อนได้เลย</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            email = st.text_input("กรอกอีเมลของคุณที่นี่")
+
+            if st.button("ส่งคำขอเข้าร่วม Beta Test"):
+                if email:
+                    if send_email(email):
+                        st.success("ส่งคำขอเรียบร้อยแล้ว! เราจะติดต่อกลับเร็ว ๆ นี้ ❤️")
+                    else:
+                        st.error("เกิดข้อผิดพลาดในการส่ง กรุณาลองใหม่อีกครั้ง")
+                else:
+                    st.warning("กรุณากรอกอีเมลก่อนกดส่ง")
+
+            # --- pic ---
+
             img_b64 = get_base64_image("IMG_1358.jpg")
 
             st.markdown(f'''
                 <img src="data:image/jpeg;base64,{img_b64}" class="fade-in-image">
             ''', unsafe_allow_html=True)
-
-            email_input = st.text_input("กรอกอีเมลของคุณ")
-
-            if st.button("ส่งคำขอ"):
-                if email_input:
-                    if send_email(email_input):
-                        st.success("ส่งคำขอเรียบร้อยแล้ว!")
-                else:
-                    st.warning("กรุณากรอกอีเมลก่อนกดส่ง")
 
             st.stop()
 
