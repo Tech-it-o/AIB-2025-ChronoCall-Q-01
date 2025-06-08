@@ -12,7 +12,7 @@ import ast
 from PIL import Image
 import base64
 
-st.set_page_config(page_title="Test-ChronoCall-Q", page_icon="🗓️")
+st.set_page_config(page_title="ChronoCall-Q", page_icon="🗓️")
 
 st.markdown("""
     <style>
