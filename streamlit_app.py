@@ -337,14 +337,6 @@ def main():
                 <img src="data:image/jpeg;base64,{img_b64}" class="fade-in-image">
             ''', unsafe_allow_html=True)
 
-            st.markdown(f"""
-                <div class="beta-button">
-                    <a href="mailto:...">
-                        <button>ขอเข้าร่วม Beta Test</button>
-                    </a>
-                </div>
-            """, unsafe_allow_html=True)
-
             email_input = st.text_input("กรอกอีเมลของคุณ")
 
             if st.button("ส่งคำขอ"):
