@@ -75,6 +75,7 @@
     }
 }
 .fade-in-up {
+    opacity: 0;
     animation: fadeInUp 1s ease forwards;
     animation-delay: 1s;
     margin-top: 40px;
